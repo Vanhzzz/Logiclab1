@@ -33,7 +33,7 @@ user1 / user1
 - Khi đặt hàng, request checkout là POST body để có thể quan sát bằng Burp
 - Mã sản phẩm và mã đơn hàng đều là chuỗi random, không có prefix `prd_` hoặc `ord_`
 - Bấm refund sẽ hiện `Wait admin accept...` và tự xử lý sau 5 giây
-- Vào chi tiết sản phẩm `$1337.00` sẽ thấy dòng:
+- Vào chi tiết sản phẩm `$500.00` sẽ thấy dòng:
 
 ```text
 The flag will appear when this order is completed.
@@ -42,7 +42,7 @@ The flag will appear when this order is completed.
 ## Giá sản phẩm
 
 ```text
-Lightweight "l33t" Leather Jacket: $1337.00
+Lightweight "l33t" Leather Jacket: $500.00
 Balance Beams: $16.11
 High-End Gift Wrapping: $15.77
 Giant Pillow Thing: $33.13
@@ -55,4 +55,4 @@ Bấm nút `Reset lab` ở góc trái trên cùng để đưa lab về trạng t
 
 ## Mục tiêu
 
-Tìm lỗi business logic trong quy trình refund để tăng wallet, sau đó hoàn tất đơn hàng `$1337.00` và lấy flag.
+Tìm lỗi business logic trong quy trình refund để tăng wallet, sau đó hoàn tất đơn hàng `$500.00` và lấy flag.
