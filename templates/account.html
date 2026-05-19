@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="account-header">
+  <div>
+    <h1>My account</h1>
+    <p class="muted">Logged in as user1</p>
+  </div>
+  <div class="wallet-card">
+    <span>Wallet balance</span>
+    <strong>{{ user.wallet_cents | money }}</strong>
+  </div>
+</section>
+
+<section class="panel coupon-panel">
+  <h2>Your coupon</h2>
+  <p>Use this code at checkout for 10% off:</p>
+  <div class="coupon-code">{{ coupon_code }}</div>
+</section>
+
+<section class="panel">
+  <h2>Orders</h2>
+  <div class="order-list">
+    {% for o in orders %}
+      <a class="order-row {{ 'target' if o.kind == 'TARGET' else '' }}" href="{{ url_for('order_detail', order_ref=o.ref) }}">
+        <img src="{{ url_for('static', filename='img/' ~ o.image) }}" alt="{{ o.product_name }}">
+        <div class="order-main">
+          {% if o.kind == 'TARGET' %}<div class="target-badge">Target order</div>{% endif %}
+          <h3>{{ o.product_name }}</h3>
+          <p>Quantity: {{ o.quantity }}{% if o.coupon_code %} · Coupon: {{ o.coupon_code }}{% endif %}</p>
+        </div>
+        <div class="order-meta">
+          <strong>{{ o.amount_cents | money }}</strong>
+          <span class="status {{ o.status|lower }}">{{ o.status }}</span>
+        </div>
+      </a>
+    {% else %}
+      <p class="muted">No orders yet.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="panel slim">
+  <h2>Refund activity</h2>
+  {% if refunds %}
+    <table class="table">
+      <thead><tr><th>Refund</th><th>Order</th><th>Status</th><th>Amount</th></tr></thead>
+      <tbody>
+        {% for r in refunds %}
+        <tr>
+          <td class="mono">{{ r.ref }}</td>
+          <td class="mono">{{ r.order_ref }}</td>
+          <td>{{ r.status }}</td>
+          <td>{{ (r.refund_amount_cents or 0) | money }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="muted">No refund requests yet.</p>
+  {% endif %}
+</section>
+{% endblock %}

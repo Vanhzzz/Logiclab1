@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#d1d5db"/>
+  <path d="M0 350h800v100H0z" fill="#9ca3af"/>
+  <g transform="translate(120 80) rotate(-8)">
+    <circle cx="170" cy="170" r="110" fill="none" stroke="#334155" stroke-width="12"/>
+    <path d="M170 60l-90 140h190z" fill="none" stroke="#334155" stroke-width="12"/>
+    <path d="M80 198h260" stroke="#334155" stroke-width="14"/>
+    <path d="M60 70h300" stroke="#ef4444" stroke-width="24" stroke-dasharray="28 22"/>
+    <path d="M90 140h280" stroke="#8b5cf6" stroke-width="24" stroke-dasharray="28 22"/>
+    <path d="M130 220h240" stroke="#f59e0b" stroke-width="24" stroke-dasharray="28 22"/>
+  </g>
+  <text x="465" y="190" font-family="Arial" font-size="40" font-weight="700" fill="#111827">Gift</text>
+  <text x="465" y="235" font-family="Arial" font-size="40" font-weight="700" fill="#111827">Wrapping</text>
+</svg>

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel order-detail-page" data-order-ref="{{ order.ref }}">
+  {% if order.kind == 'TARGET' %}
+    <div class="flag-note">The flag will appear when this order is completed.</div>
+  {% endif %}
+
+  {% if order.kind == 'TARGET' and order.status == 'COMPLETED' %}
+    <div class="flag-box">{{ order.flag }}</div>
+  {% endif %}
+
+  <div class="order-detail-layout">
+    <img src="{{ url_for('static', filename='img/' ~ order.image) }}" alt="{{ order.product_name }}">
+    <div>
+      <h1>{{ order.product_name }}</h1>
+      <p>{{ order.description }}</p>
+      <dl class="kv">
+        <dt>Quantity</dt><dd>{{ order.quantity }}</dd>
+        <dt>Amount paid</dt><dd>{{ order.amount_cents | money }}</dd>
+        {% if order.discount_cents %}<dt>Discount</dt><dd>-{{ order.discount_cents | money }}</dd>{% endif %}
+        <dt>Status</dt><dd><span class="status {{ order.status|lower }}">{{ order.status }}</span></dd>
+      </dl>
+
+      {% if order.kind == 'TARGET' and order.status != 'COMPLETED' %}
+        <button class="primary-btn" id="complete-order-btn" data-order-ref="{{ order.ref }}">Complete this order</button>
+        <div id="complete-result" class="result-box"></div>
+      {% elif order.status == 'PAID' %}
+        <div style="margin-bottom: 10px;">
+          <label for="refund-reason" style="display:block; color:#666; margin-bottom:6px;">Reason</label>
+          <input id="refund-reason" class="qty-input wide" type="text" placeholder="Payment issue" value="Payment issue">
+        </div>
+        <button class="primary-btn" id="refund-btn" data-order-ref="{{ order.ref }}" data-product-ref="{{ order.product_ref }}">Request refund</button>
+        <div id="refund-wait" class="wait-box hidden">
+          <span class="spinner"></span>
+          <span>Wait admin accept...</span>
+        </div>
+        <div id="refund-result" class="result-box"></div>
+      {% elif order.status == 'REFUND_PENDING' %}
+        <div class="wait-box">
+          <span class="spinner"></span>
+          <span>Wait admin accept...</span>
+        </div>
+      {% else %}
+        <p class="muted">No actions available for this order.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  window.ORDER_REF = {{ order.ref|tojson }};
+</script>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="catalog-shell">
+  <h1>Product catalog</h1>
+</section>
+
+<section class="catalog-grid">
+  {% for p in products %}
+  <article class="product-card">
+    <a class="product-image-link" href="{{ url_for('product_detail', product_ref=p.ref) }}">
+      <img class="product-image" src="{{ url_for('static', filename='img/' ~ p.image) }}" alt="{{ p.name }}">
+    </a>
+    <h3>{{ p.name }}</h3>
+    <div class="rating-price">
+      <span class="stars" aria-label="{{ p.rating }} star rating">
+        {% for i in range(1,6) %}<span class="star {{ 'on' if i <= p.rating else 'off' }}">★</span>{% endfor %}
+      </span>
+      <span class="price">{{ p.price_cents | money }}</span>
+    </div>
+    <a class="details-btn" href="{{ url_for('product_detail', product_ref=p.ref) }}">View details</a>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}
